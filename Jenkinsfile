@@ -11,7 +11,7 @@ pipeline {
         PRODUCTION = "openpepe-prod"
         DOCKERHUB_ID = "pepekalleydocker"
         DOCKERHUB_PASSWORD = credentials('dockerhub_password')
-		GITHUB_ID = "pepekalley"
+	GITHUB_ID = "pepekalley"
     }
     agent none
     stages {
