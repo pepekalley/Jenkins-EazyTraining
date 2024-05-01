@@ -70,7 +70,7 @@ pipeline {
           }
       }
 
-     /* stage('Push image in staging and deploy it') { 
+      stage('Push image in staging and deploy it') { 
         when {
             expression { GIT_BRANCH == 'origin/main' }
         }
@@ -106,7 +106,7 @@ pipeline {
             '''
           }
        }
-     }*/
+     }
   }
   post {
        success {
