@@ -4,6 +4,7 @@
 pipeline {
     environment {
         IMAGE_NAME = "staticwebsite"
+        APP_NAME = "openpepe"
         APP_CONTAINER_PORT = "5000"
         APP_EXPOSED_PORT = "80"
         IMAGE_TAG = "latest"
@@ -20,7 +21,8 @@ pipeline {
            agent any
            steps {
               script {
-                sh 'docker build -t ${DOCKERHUB_ID}/$IMAGE_NAME:$IMAGE_TAG .'
+                /* sh 'docker build -t ${DOCKERHUB_ID}/$IMAGE_NAME:$IMAGE_TAG .' */
+                sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG .'
               }
            }
        }
@@ -31,7 +33,7 @@ pipeline {
               sh '''
                   echo "Cleaning existing container if exist"
                   docker ps -a | grep -i $IMAGE_NAME && docker rm -f $IMAGE_NAME
-                  docker run --name $IMAGE_NAME -d -p $APP_EXPOSED_PORT:$APP_CONTAINER_PORT -e PORT=$APP_CONTAINER_PORT ${DOCKERHUB_ID}/$IMAGE_NAME:$IMAGE_TAG
+                  docker run --name $APP_NAME -d -p $APP_EXPOSED_PORT:$APP_CONTAINER_PORT -e PORT=$APP_CONTAINER_PORT $IMAGE_NAME:$IMAGE_TAG
                   sleep 5
               '''
              }
@@ -52,8 +54,8 @@ pipeline {
           steps {
              script {
                sh '''
-                   docker stop $IMAGE_NAME
-                   docker rm $IMAGE_NAME
+                   docker stop $APP_NAME
+                   docker rm $APP_NAME
                '''
              }
           }
@@ -65,6 +67,7 @@ pipeline {
              script {
                sh '''
                    echo $DOCKERHUB_PASSWORD | docker login -u $DOCKERHUB_ID --password-stdin
+                   docker tag $IMAGE_NAME:$IMAGE_TAG ${DOCKERHUB_ID}/$IMAGE_NAME:$IMAGE_TAG
                    docker push ${DOCKERHUB_ID}/$IMAGE_NAME:$IMAGE_TAG
                '''
              }
@@ -87,9 +90,10 @@ pipeline {
         steps {
            script {
              sh '''
-                echo $GITHUB_API_KEY | docker login ghcr.io -u $GITHUB_ID --password-stdin
-                docker tag $IMAGE_NAME:$IMAGE_TAG ${GITHUB_ID}/$IMAGE_NAME-$STAGING:$IMAGE_TAG
-                docker push ${GITHUB_ID}/$IMAGE_NAME-$STAGING:$IMAGE_TAG
+                docker tag $IMAGE_NAME:$IMAGE_TAG ghrc.io/$IMAGE_NAME-$STAGING:$IMAGE_TAG
+                echo $GITHUB_API_KEY | docker login ghcr.io -u $GITHUB_ID --password-stdin */
+                /* docker tag $IMAGE_NAME:$IMAGE_TAG ghrc.io/$IMAGE_NAME-$STAGING:$IMAGE_TAG
+                docker push ghrc.io/$IMAGE_NAME-$STAGING:$IMAGE_TAG
              '''
            }
         }
@@ -109,9 +113,10 @@ pipeline {
        steps {
           script {
             sh '''
+               docker tag $IMAGE_NAME:$IMAGE_TAG ghcr.io/$IMAGE_NAME-$PRODUCTION:$IMAGE_TAG
                echo $GITHUB_API_KEY | docker login ghcr.io -u $GITHUB_ID --password-stdin
-               docker tag $IMAGE_NAME:$IMAGE_TAG ${GITHUB_ID}/$IMAGE_NAME-$PRODUCTION:$IMAGE_TAG
-               docker push ${GITHUB_ID}/$IMAGE_NAME-$PRODUCTION:$IMAGE_TAG
+               / *docker tag $IMAGE_NAME:$IMAGE_TAG ghcr.io/$IMAGE_NAME-$PRODUCTION:$IMAGE_TAG */
+               docker push ghcr.io/$IMAGE_NAME-$PRODUCTION:$IMAGE_TAG
             '''
           }
        }
