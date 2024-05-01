@@ -12,7 +12,7 @@ pipeline {
         DOCKERHUB_ID = "pepekalleydocker"
         DOCKERHUB_PASSWORD = credentials('dockerhub_password')
 	GITHUB_ID = "pepekalley"
-        /* GITHUB_PASSWORD = credentials('dockerhub_password')*/
+        GITHUB_API_KEY = credentials('github_api_key')*/
     }
     agent none
     stages {
@@ -71,17 +71,19 @@ pipeline {
           }
       }
 
-      stage('Push image in staging and deploy it') { 
+      stage('Push image in staging and deploy it') {
+        agent any 
         /*when {
           expression { GIT_BRANCH == 'origin/master' }
-        }*/
+        }
 	agent {
           docker { image 'franela/dind' }
 	}
 
         environment {
           GITHUB_API_KEY = credentials('github_api_key')
-        }
+        }*/
+
         steps {
            script {
              sh '''
@@ -91,15 +93,17 @@ pipeline {
         }
      }
      stage('Push image in production and deploy it') { 
+       agent any
        /*when {
          expression { GIT_BRANCH == 'origin/master' }
-       }*/
+       }
 	agent {
           docker { image 'franela/dind' }
 	}
        environment {
          GITHUB_API_KEY = credentials('github_api_key')
-       }
+       }*/
+
        steps {
           script {
             sh '''
