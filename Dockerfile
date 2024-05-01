@@ -1,7 +1,7 @@
 FROM nginx:1.21.1
-LABEL org.opencontainers.image.authors="Pepe Kalley" 
-	\ org.opencontainers.image.source="https://github.com/pepekalley/Jenkins-EazyTraining"
-	\ org.opencontainers.image.description="My container image student from EazyTraining"
+LABEL org.opencontainers.image.authors="Pepe Kalley" \ 
+	org.opencontainers.image.source="https://github.com/pepekalley/Jenkins-EazyTraining" \
+	org.opencontainers.image.description="My container image student from EazyTraining"
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y curl && \
