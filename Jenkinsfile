@@ -12,7 +12,7 @@ pipeline {
         DOCKERHUB_ID = "pepekalleydocker"
         DOCKERHUB_PASSWORD = credentials('dockerhub_password')
 	GITHUB_ID = "pepekalley"
-        GITHUB_API_KEY = credentials('github_api_key')*/
+        GITHUB_API_KEY = credentials('github_api_key')
     }
     agent none
     stages {
