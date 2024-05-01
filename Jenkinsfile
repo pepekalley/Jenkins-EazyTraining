@@ -74,7 +74,7 @@ pipeline {
           }
       }
 
-      stage('Push image in staging and deploy it') {
+      stage('Push image in staging and deploy it on Github') {
         agent any 
         /*when {
           expression { GIT_BRANCH == 'origin/master' }
@@ -97,7 +97,7 @@ pipeline {
            }
         }
      }
-     stage('Push image in production and deploy it') { 
+     stage('Push image in production and deploy it on Github') { 
        agent any
        /*when {
          expression { GIT_BRANCH == 'origin/master' }
@@ -112,9 +112,9 @@ pipeline {
        steps {
           script {
             sh '''
-               docker tag $IMAGE_NAME:$IMAGE_TAG ghcr.io/$IMAGE_NAME-$PRODUCTION:$IMAGE_TAG
+               docker tag $IMAGE_NAME:$IMAGE_TAG ghcr.io/pepekalley/$IMAGE_NAME-$PRODUCTION:$IMAGE_TAG
                echo $GITHUB_API_KEY | docker login ghcr.io -u $GITHUB_ID --password-stdin
-               docker push ghcr.io/$IMAGE_NAME-$PRODUCTION:$IMAGE_TAG
+               docker push ghcr.io/pepekalley/$IMAGE_NAME-$PRODUCTION:$IMAGE_TAG
             '''
           }
        }
