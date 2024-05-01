@@ -90,9 +90,9 @@ pipeline {
         steps {
            script {
              sh '''
-                docker tag $IMAGE_NAME:$IMAGE_TAG ghrc.io/pepekalley/$IMAGE_NAME:$IMAGE_TAG
+                docker tag $IMAGE_NAME:$IMAGE_TAG ghcr.io/pepekalley/$IMAGE_NAME-$STAGING:$IMAGE_TAG
                 echo $GITHUB_API_KEY | docker login ghcr.io -u $GITHUB_ID --password-stdin
-                docker push ghrc.io/pepekalley/$IMAGE_NAME:$IMAGE_TAG
+                docker push ghcr.io/pepekalley/$IMAGE_NAME-$STAGING:$IMAGE_TAG
              '''
            }
         }
