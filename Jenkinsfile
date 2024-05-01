@@ -88,6 +88,7 @@ pipeline {
            script {
              sh '''
                 echo $GITHUB_API_KEY | docker login ghcr.io -u $GITHUB_ID --password-stdin
+                docker tag $IMAGE_NAME:$IMAGE_TAG ${GITHUB_ID}/$IMAGE_NAME-$STAGING:$IMAGE_TAG
                 docker push ${GITHUB_ID}/$IMAGE_NAME-$STAGING:$IMAGE_TAG
              '''
            }
@@ -109,6 +110,7 @@ pipeline {
           script {
             sh '''
                echo $GITHUB_API_KEY | docker login ghcr.io -u $GITHUB_ID --password-stdin
+               docker tag $IMAGE_NAME:$IMAGE_TAG ${GITHUB_ID}/$IMAGE_NAME-$PRODUCTION:$IMAGE_TAG
                docker push ${GITHUB_ID}/$IMAGE_NAME-$PRODUCTION:$IMAGE_TAG
             '''
           }
