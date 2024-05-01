@@ -70,11 +70,10 @@ pipeline {
           }
       }
 
-     /* stage('Push image in staging and deploy it') {
-       /* agent any 
+     /* stage('Push image in staging and deploy it') { 
         when {
             expression { GIT_BRANCH == 'origin/main' }
-        } */
+        }
 	agent {
         	docker { image 'franela/dind' }
 	}
@@ -90,11 +89,10 @@ pipeline {
            }
         }
      }
-     stage('Push image in production and deploy it') {
-       /* #agent any 
+     stage('Push image in production and deploy it') { 
        when {
            expression { GIT_BRANCH == 'origin/main' }
-       } */
+       }
 	agent {
         	docker { image 'franela/dind' }
 	}
