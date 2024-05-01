@@ -88,6 +88,7 @@ pipeline {
            script {
              sh '''
                 echo $GITHUB_API_KEY | docker login ghcr.io -u $GITHUB_ID --password-stdin
+                docker push ${GITHUB_ID}/$IMAGE_NAME-$STAGING:$IMAGE_TAG
              '''
            }
         }
@@ -108,6 +109,7 @@ pipeline {
           script {
             sh '''
                echo $GITHUB_API_KEY | docker login ghcr.io -u $GITHUB_ID --password-stdin
+               docker push ${GITHUB_ID}/$IMAGE_NAME-$PRODUCTION:$IMAGE_TAG
             '''
           }
        }
@@ -120,5 +122,8 @@ pipeline {
       failure {
             slackSend (color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
           }   
+      always {
+        sh 'docker logout'
+        }
     }
 }
