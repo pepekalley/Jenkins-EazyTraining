@@ -1,6 +1,5 @@
 FROM nginx:1.21.1
-LABEL maintainer="Pepe Kalley"
-LABEL org.opencontainers.image.source https://github.com/pepekalley/Jenkins-EazyTraining.git
+LABEL maintainer="Pepe Kalley" org.opencontainers.image.source="https://github.com/pepekalley/Jenkins-EazyTraining.git"
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y curl && \
