@@ -72,9 +72,9 @@ pipeline {
       }
 
       stage('Push image in staging and deploy it') { 
-        when {
+        /*when {
           expression { GIT_BRANCH == 'origin/master' }
-        }
+        }*/
 	agent {
           docker { image 'franela/dind' }
 	}
@@ -91,9 +91,9 @@ pipeline {
         }
      }
      stage('Push image in production and deploy it') { 
-       when {
+       /*when {
          expression { GIT_BRANCH == 'origin/master' }
-       }
+       }*/
 	agent {
           docker { image 'franela/dind' }
 	}
